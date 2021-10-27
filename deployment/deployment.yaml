@@ -17,13 +17,13 @@ spec:
     spec:
       containers:
         - name: wechat-cs-backend
-          image:  bieldatalab/wechat-cs-backend:${IMAGE_TAG}
+          image: bieldatalab/wechat-cs-backend:${IMAGE_TAG}
           imagePullPolicy: Always
           env:
             - name: MYSQL_HOST
               value: mariadb-galera.biel-db.svc.cluster.local
             - name: MYSQL_PORT
-              value: "3306"
+              value: '3306'
           envFrom:
             - secretRef:
                 name: wechat-cs-backend-secrets
