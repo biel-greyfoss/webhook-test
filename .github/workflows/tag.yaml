@@ -17,7 +17,10 @@ jobs:
           # Strip git ref prefix from version
           # $(echo "$COMMIT_MSG" | sed "s/.*release-\([^ ]*\).*$/\1/")
           VERSION=release-$(echo "$PULL_REQUEST_BODY" | sed "s/.*release-\([^ ]*\).*$/\1/")
+          echo "$VERSION"
           echo VERSION=$VERSION
+       - name: Checkout
+         uses: actions/checkout@v2
        - name: YAML Update Actoin
          uses: fjogeleit/yaml-update-action@master
          with:
