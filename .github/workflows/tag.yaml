@@ -18,9 +18,8 @@ jobs:
        #  uses: mikefarah/yq@master
        #  with:
        #   cmd: yq eval -i '.steps.template.spec.containers.image = "cool"' 'deployment/deployment.yaml'
-            
        - name: YAML Update Actoin
-         uses: fjogeleit/yaml-update-action@master
+         uses: fjogeleit/yaml-update-action@b3f82c2159e29fda093df80a9383830b7ee25ddb
          with:
            valueFile: 'deployment/deployment.yaml'
            propertyPath: 'spec.template.spec.containers.image'
