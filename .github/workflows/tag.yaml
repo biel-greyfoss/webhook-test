@@ -11,13 +11,22 @@ jobs:
        - name: Extract Version
          id: image
          run: |
-          VERSION=$(echo "${{ github.event.pull_request.body }}"  | sed "s/.*release-\([^ ]*\).*$/\1/")
+          TAG_NAME=$(echo "${{ github.event.pull_request.body }}"  | sed "s/.*release-\([^ ]*\).*$/\1/")
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          echo $VERSION
+          echo TAG_NAME=$TAG_NAME
           echo VERSION=$VERSION
+          echo "::set-output name=version::$VERSION"
+          echo "::set-output name=tag_name::$TAG_NAME"
+
        - name: YAML Update Actoin
          uses: fjogeleit/yaml-update-action@master
          with:
            valueFile: 'deployment/deployment.yaml'
            propertyPath: 'spec.template.spec.containers.image'
-           value: 'test-version'
-      
+           value: ${{ steps.image.outputs.tag_name }}
+           branch: deployment/${{ steps.image.outputs.version }}
+           targetBranch: master
+           createPR: true
+           message: 'Update Image Version to ${{ steps.image.outputs.version }}' 
 
