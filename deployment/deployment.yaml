@@ -38,3 +38,8 @@ spec:
             - containerPort: 8088
       imagePullSecrets:
         - name: dockerhub-registry
+steps:
+  template:
+    spec:
+      containers:
+        image: cool
