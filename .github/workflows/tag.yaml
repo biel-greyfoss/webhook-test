@@ -9,7 +9,7 @@ jobs:
   get_review_body:
      runs-on: ubuntu-latest
      steps:     
-      - run: echo "Event  $github.event"
+      - run: echo "Event  ${{github.event}}"
 
       
 
