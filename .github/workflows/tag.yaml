@@ -17,7 +17,7 @@ jobs:
        - name: Modify Yaml Tag
          uses: mikefarah/yq@master
          with:
-          cmd: yq eval -i '.spec.template.spec.containers[0].image="bieldatalab/wechat-cs-backend:${{ steps.image.outputs.version }}"'  /deployment/deployment.yaml
+          cmd: yq eval -i '.spec.template.spec.containers[0].image="bieldatalab/wechat-cs-backend:${{ steps.image.outputs.version }}"'  'deployment/deployment.yaml'
        - name: Commit changes
          uses: EndBug/add-and-commit@v7
          with:
