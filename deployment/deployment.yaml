@@ -1,24 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
-tag: test
 metadata:
   name: wechat-cs-backend
   namespace: biel-production
   labels:
-    app: {{ .Values.metadata.name }}
+    app: wechat-cs-backend
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.metadata.name }}
+      app: wechat-cs-backend
   replicas: 2
   template:
     metadata:
       labels:
-        app: {{ .Values.metadata.name }}
+        app: wechat-cs-backend
     spec:
       containers:
-        - name: {{ .Values.metadata.name }}
-          image: bieldatalab/wechat-cs-backend:{{ .Values.tag }}
+        - name: wechat-cs-backend
+          image: bieldatalab/wechat-cs-backend:test
           imagePullPolicy: Always
           env:
             - name: MYSQL_HOST
