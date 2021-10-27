@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wechat-cs-backend
+  namespace: biel-production
+  labels:
+    app: wechat-cs-backend
+spec:
+  selector:
+    matchLabels:
+      app: wechat-cs-backend
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: wechat-cs-backend
+    spec:
+      containers:
+        - name: wechat-cs-backend
+          image:  bieldatalab/wechat-cs-backend:release-0.0.1
+          imagePullPolicy: Always
+          env:
+            - name: MYSQL_HOST
+              value: mariadb-galera.biel-db.svc.cluster.local
+            - name: MYSQL_PORT
+              value: "3306"
+          envFrom:
+            - secretRef:
+                name: wechat-cs-backend-secrets
+          resources:
+            requests:
+              cpu: 100m
+              memory: 300Mi
+            limits:
+              cpu: 400m
+              memory: 500Mi
+          ports:
+            - containerPort: 8088
+      imagePullSecrets:
+        - name: dockerhub-registry
