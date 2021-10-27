@@ -13,7 +13,8 @@ jobs:
          run: |
           TAG_NAME=$(echo "${{ github.event.pull_request.body }}"  | sed "s/.*release-\([^ ]*\).*$/\1/")
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          echo "${{ github.ref }}"
+          echo "${{ github.base_ref }}"
+          echo "${{ github.head_ref }}"
           echo $VERSION
           echo TAG_NAME=$TAG_NAME
           echo VERSION=$VERSION
@@ -21,13 +22,11 @@ jobs:
           echo "::set-output name=tag_name::$TAG_NAME"
 
        - name: YAML Update Actoin
-         uses: fjogeleit/yaml-update-action@master
+         uses: swdotcom/update-and-apply-kubernetes-configs@v1
          with:
-           valueFile: 'deployment/deployment.yaml'
-           propertyPath: 'spec.template.spec.containers.image'
-           value: ${{ steps.image.outputs.tag_name }}
-           branch: deployment/${{ steps.image.outputs.version }}
-           targetBranch: master
-           createPR: true
-           message: 'Update Image Version to ${{ steps.image.outputs.version }}' 
+          k8-config-file-paths: 'deployment/deployment.yaml'
+         env:
+           IMAGE_TAG: ${{ steps.image.outputs.tag_name }}
+         
+           
 
