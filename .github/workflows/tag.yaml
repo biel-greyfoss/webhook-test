@@ -22,11 +22,16 @@ jobs:
           echo "::set-output name=tag_name::$TAG_NAME"
 
        - name: YAML Update Actoin
-         uses: swdotcom/update-and-apply-kubernetes-configs@v1
+         uses: fjogeleit/yaml-update-action@master
          with:
-          k8-config-file-paths: 'deployment/deployment.yaml'
-         env:
-           IMAGE_TAG: ${{ steps.image.outputs.tag_name }}
+           valueFile: 'deployment/deployment.yaml'
+           propertyPath: 'spec.template.spec.containers.image'
+           value: ${{ steps.image.outputs.tag_name }}
+           branch: main
+           masterBranchName: 'main'
+           targetBranch: main
+           updateFile: true
+           message: 'Update Image Version to ${{ steps.image.outputs.version }}' 
          
            
 
