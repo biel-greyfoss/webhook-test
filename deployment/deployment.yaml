@@ -5,20 +5,20 @@ metadata:
   name: wechat-cs-backend
   namespace: biel-production
   labels:
-    app: {{ .Values.metadata.name }}
+    app: {? {.Values.metadata.name: ''} : ''}
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.metadata.name }}
+      app: {? {.Values.metadata.name: ''} : ''}
   replicas: 2
   template:
     metadata:
       labels:
-        app: {{ .Values.metadata.name }}
+        app: {? {.Values.metadata.name: ''} : ''}
     spec:
       containers:
-        - name: {{ .Values.metadata.name }}
-          image: bieldatalab/wechat-cs-backend:{{ .Values.tag }}
+        - name: {? {.Values.metadata.name: ''} : ''}
+          image: release-0.1.1
           imagePullPolicy: Always
           env:
             - name: MYSQL_HOST
