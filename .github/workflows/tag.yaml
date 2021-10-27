@@ -4,34 +4,27 @@ on:
     types: 
       - submitted
 jobs:
-  Get_review_body:
+  Add_tag:
      runs-on: ubuntu-latest
      steps:     
-       - name: Echo event object
-         run: echo "Event  ${{github.event}}"
        - name: Dump GitHub context
          env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-         run: echo "$GITHUB_CONTEXT"
-       - name: Dump job context
-         env:
-            JOB_CONTEXT: ${{ toJSON(job) }}
-         run: echo "$JOB_CONTEXT"
-       - name: Dump steps context
-         env:
-            STEPS_CONTEXT: ${{ toJSON(steps) }}
-         run: echo "$STEPS_CONTEXT"
-       - name: Dump runner context
-         env:
-            RUNNER_CONTEXT: ${{ toJSON(runner) }}
-         run: echo "$RUNNER_CONTEXT"
-       - name: Dump strategy context
-         env:
-            STRATEGY_CONTEXT: ${{ toJSON(strategy) }}
-         run: echo "$STRATEGY_CONTEXT"
-       - name: Dump matrix context
-         env:
-            MATRIX_CONTEXT: ${{ toJSON(matrix) }}
-         run: echo "$MATRIX_CONTEXT"
+           PULL_REQUEST_BODY: ${{ github.event.pull_request.body }}
+         run: echo "$PULL_REQUEST_BODY"
+       - name: Extract Version
+         id: image
+         run:
+          # Strip git ref prefix from version
+          # $(echo "$COMMIT_MSG" | sed "s/.*release-\([^ ]*\).*$/\1/")
+          VERSION=release-$(echo "$PULL_REQUEST_BODY" | sed -e 's,.*/\(.*\),\1,')
+          echo VERSION=$VERSION
+       - name: YAML Update Actoin
+         uses: fjogeleit/yaml-update-action@master
+         with:
+           valueFile: 'deployment/deployment.yaml'
+           propertyPath: 'spec.template.spec.containers.image'
+           value: ${{ steps.image.outputs.version }}
+       #- name: Tag test
+       #  uses: EndBug/add-and-commit@v7
       
 
