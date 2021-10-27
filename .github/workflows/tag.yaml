@@ -13,6 +13,8 @@ jobs:
          run: |
           VERSION=release-$(echo "${{ github.event.pull_request.body }}"  | sed "s/.*release-\([^ ]*\).*$/\1/")
           echo VERSION=$VERSION
+          echo "${{ github.head_ref }}"
+          echo "${{ github.base_ref }}"
           echo "::set-output name=version::$VERSION"
 
        - name: YAML Update Actoin
