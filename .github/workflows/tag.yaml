@@ -1,7 +1,8 @@
 name:  Taging Pipeline
 on:
   pull_request_review:
-    types: [edited, submitted]
+    types: 
+      - submitted
 jobs:
   Get_review_body:
      runs-on: ubuntu-latest
