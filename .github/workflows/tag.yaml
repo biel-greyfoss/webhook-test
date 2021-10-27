@@ -50,6 +50,7 @@ jobs:
            propertyPath: spec.template.spec.containers.image
            value: ${{ steps.image.outputs.version }}
            updateFile: true
+           branch: ${{ github.event.pull_request.head.ref }}
            message: 'Update Image Tag to ${{ steps.image.outputs.version }}' 
          
            
