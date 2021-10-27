@@ -13,6 +13,7 @@ jobs:
          run: |
           TAG_NAME=$(echo "${{ github.event.pull_request.body }}"  | sed "s/.*release-\([^ ]*\).*$/\1/")
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          echo "${{ github.ref }}"
           echo $VERSION
           echo TAG_NAME=$TAG_NAME
           echo VERSION=$VERSION
