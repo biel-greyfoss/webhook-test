@@ -14,18 +14,25 @@ jobs:
           VERSION=release-$(echo "${{ github.event.pull_request.body }}"  | sed "s/.*release-\([^ ]*\).*$/\1/")
           echo VERSION=$VERSION
           echo "::set-output name=version::$VERSION"
-       #- name: Set foobar to cool
-       #  uses: mikefarah/yq@master
-       #  with:
-       #   cmd: yq eval -i '.steps.template.spec.containers.image = "cool"' 'deployment/deployment.yaml'
-       - name: YAML Update Actoin
-         uses: fjogeleit/yaml-update-action@b3f82c2159e29fda093df80a9383830b7ee25ddb
+       - name: Set foobar to cool
+         uses: mikefarah/yq@master
          with:
-           valueFile: 'deployment/deployment.yaml'
-           propertyPath: 'spec.template.spec.containers.image'
-           value: ${{ steps.image.outputs.version }}
-           branch: ${{ github.event.pull_request.head.ref }}-new
-           message: 'Update Image Tag to ${{ steps.image.outputs.version }}' 
+          cmd: yq eval -i '.steps.template.spec.containers.image = "cool"' 'deployment/deployment.yaml'
+       - name: Commit changes
+         uses: EndBug/add-and-commit@v7
+         with:
+          author_name: Your Name
+          author_email: mail@example.com
+          message: 'Your commit message'
+          add: '*.yaml'
+       #- name: YAML Update Actoin
+       #  uses: fjogeleit/yaml-update-action@b3f82c2159e29fda093df80a9383830b7ee25ddb
+       #  with:
+       #    valueFile: 'deployment/deployment.yaml'
+       #    propertyPath: 'spec.template.spec.containers.image'
+       #    value: ${{ steps.image.outputs.version }}
+       #    branch: ${{ github.event.pull_request.head.ref }}-new
+       #    message: 'Update Image Tag to ${{ steps.image.outputs.version }}' 
          
            
 
