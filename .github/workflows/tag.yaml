@@ -7,16 +7,17 @@ jobs:
   Add_tag:
      runs-on: ubuntu-latest
      steps:     
+       - uses: actions/checkout@v2
        - name: Dump GitHub context
          env:
            PULL_REQUEST_BODY: ${{ github.event.pull_request.body }}
          run: echo "$PULL_REQUEST_BODY"
        - name: Extract Version
          id: image
-         run:
+         run: |
           # Strip git ref prefix from version
           # $(echo "$COMMIT_MSG" | sed "s/.*release-\([^ ]*\).*$/\1/")
-          VERSION=release-$(echo "$PULL_REQUEST_BODY" | sed "s/.*release-\([^ ]*\).*$/\1/")
+          VERSION=$(echo "$PULL_REQUEST_BODY" | sed "s/.*release-\([^ ]*\).*$/\1/")
           echo "$VERSION"
           echo VERSION=$VERSION
        - name: Checkout
