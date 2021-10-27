@@ -3,5 +3,4 @@
 Test
 
 New line.
-
-1
+3
