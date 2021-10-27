@@ -2,8 +2,8 @@ name:  Taging Pipeline
 
 on:
   pull_request_review:
-    types:
-      - edited
+    types: [edited, submitted]
+
   
 jobs:
   get_review_body:
