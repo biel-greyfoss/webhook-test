@@ -20,8 +20,6 @@ jobs:
           VERSION=$(echo "$PULL_REQUEST_BODY" | sed "s/.*release-\([^ ]*\).*$/\1/")
           echo "$VERSION"
           echo VERSION=$VERSION
-       - name: Checkout
-         uses: actions/checkout@v2
        - name: YAML Update Actoin
          uses: fjogeleit/yaml-update-action@master
          with:
