@@ -8,11 +8,13 @@ jobs:
      runs-on: ubuntu-latest
      steps:     
        - uses: actions/checkout@v2  
+       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
        - name: Extract Version
          id: image
          run: |
           VERSION=release-$(echo "${{ github.event.pull_request.body }}"  | sed "s/.*release-\([^ ]*\).*$/\1/")
           echo VERSION=$VERSION
+          
           echo "${{ github.head_ref }}"
           echo "${{ github.base_ref }}"
           echo "::set-output name=version::$VERSION"
