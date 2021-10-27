@@ -17,10 +17,8 @@ jobs:
          run: |
           # Strip git ref prefix from version
           # $(echo "$COMMIT_MSG" | sed "s/.*release-\([^ ]*\).*$/\1/")
-          VERSION=$(echo $PULL_REQUEST_BODY | sed "s/.*release-\([^ ]*\).*$/\1/")
-          TEST=$(echo "${{ github.event.pull_request.body }}"  | sed "s/.*release-\([^ ]*\).*$/\1/")
+          VERSION=$(echo "${{ github.event.pull_request.body }}"  | sed "s/.*release-\([^ ]*\).*$/\1/")
           echo "$VERSION"
-          echo "$TEST"
           echo VERSION=$VERSION
        - name: YAML Update Actoin
          uses: fjogeleit/yaml-update-action@master
