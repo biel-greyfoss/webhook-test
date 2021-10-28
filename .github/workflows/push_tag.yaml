@@ -11,9 +11,12 @@ jobs:
      steps:     
        - uses: actions/checkout@v2   
        - name: Extract Version
+         id: lookupVersion
          uses: mikefarah/yq@master
          with:
-          cmd: VERSION=yq e '.spec.template.spec.containers[0].image' 'deployment/deployment.yaml'
+          cmd: yq e '.spec.template.spec.containers[0].image' 'deployment/deployment.yaml'
+       - name: show yq result
+         run: echo Result is ${{ steps.lookupVersion.outputs.result }}
        - name: Push Tag
          id: image
          run: |
