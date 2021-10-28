@@ -1,11 +1,10 @@
 name:  Push Tag Pipeline
 on:
-  create:
+  push:
     branches: 
       - master
 jobs:
   Push_tag:
-     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
      runs-on: ubuntu-latest
      steps:     
        - name: Dump GitHub context
