@@ -1,4 +1,4 @@
-name:  Taging Pipeline
+name:  Add Tag Pipeline
 on:
   pull_request_review:
     types: 
@@ -11,19 +11,19 @@ jobs:
        - name: Extract Version
          id: image
          run: |
-          VERSION=release-$(echo "${{ github.event.pull_request.body }}"  | sed "s/.*release-\([^ ]*\).*$/\1/")
+          VERSION=bieldatalab/wechat-cs-backend:release-$(echo "${{ github.event.review.body }}"  | sed "s/.*release-\([^ ]*\).*$/\1/")
           echo VERSION=$VERSION
           echo "::set-output name=version::$VERSION"
        - name: Modify Yaml Tag
          uses: mikefarah/yq@master
          with:
-          cmd: yq eval -i '.spec.template.spec.containers[0].image="bieldatalab/wechat-cs-backend:${{ steps.image.outputs.version }}"'  'deployment/deployment.yaml'
+          cmd: yq eval -i '.spec.template.spec.containers[0].image="${{ steps.image.outputs.version }}"'  'deployment/deployment.yaml'
        - name: Commit changes
          uses: EndBug/add-and-commit@v7
          with:
-          author_name: Github
-          author_email: Github@bielcrystal.com
-          message: 'Update Image Tag to ${{ steps.image.outputs.version }}' 
+          author_name: Datalab
+          author_email: Datalab@bielcrystal.com
+          message: 'Update image tag to ${{ steps.image.outputs.version }}' 
           add: '*.yaml'
 
          
