@@ -4,4 +4,4 @@ Test
 
 New line.
 
-6
+2
