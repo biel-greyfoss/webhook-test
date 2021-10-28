@@ -9,6 +9,10 @@ jobs:
      if: ${{ github.event.pull_request.merged }}
      runs-on: ubuntu-latest
      steps:     
+       - name: Dump GitHub context
+         env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+         run: echo "$GITHUB_CONTEXT"
        - uses: actions/checkout@v2   
        - name: Extract Version
          id: lookupVersion
