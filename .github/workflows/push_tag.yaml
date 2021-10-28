@@ -13,8 +13,8 @@ jobs:
        - name: Push Tag
          id: image
          run: |
-          VERSION=bieldatalab/wechat-cs-backend:release-$(echo "${{ github.event.review.body }}"  | sed "s/.*release-\([^ ]*\).*$/\1/")
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$FILES_IMAGE_NAME
+          VERSION=release-$(echo "${{ github.event.review.body }}"  | sed "s/.*release-\([^ ]*\).*$/\1/")
+          IMAGE_ID=$FILES_IMAGE_NAME
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
           docker tag image $IMAGE_ID:$VERSION
