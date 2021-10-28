@@ -1,4 +1,4 @@
-name:  Add Tag Pipeline
+name:  Modify YAML Tag
 on:
   pull_request_review:
     types: 
