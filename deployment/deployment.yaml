@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: wechat-cs-backend
-          image: bieldatalab/wechat-cs-backend:release-1.0.0
+          image: bieldatalab/wechat-cs-backend:release-1.2.0
           imagePullPolicy: Always
           env:
             - name: MYSQL_HOST
