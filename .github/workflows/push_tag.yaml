@@ -5,6 +5,7 @@ on:
       - master
 jobs:
   Push_tag:
+     if: ${{ contains(github.event.commits.*.message, 'Update image tag to') }}
      runs-on: ubuntu-latest
      steps:     
        - name: Dump GitHub context
