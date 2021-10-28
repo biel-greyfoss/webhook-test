@@ -1,12 +1,10 @@
 name:  Push Tag Pipeline
 on:
-  pull_request:
+  create:
     branches: 
       - master
-    types: [closed]
 jobs:
   Push_tag:
-     if: ${{ github.event.pull_request.merged }}
      runs-on: ubuntu-latest
      steps:     
        - name: Dump GitHub context
