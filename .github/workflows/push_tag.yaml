@@ -16,11 +16,6 @@ jobs:
          with:
           cmd: yq e '.spec.template.spec.containers[0].image' 'deployment/deployment.yaml'
        - name: Push Tag
-         id: image
          run: |
-          IMAGE_ID=$FILES_IMAGE_NAME
-          echo IMAGE_ID=$IMAGE_ID
-          echo $VERSION
-          #echo VERSION=$VERSION
           git tag $(echo "${{ steps.lookupVersion.outputs.result }}"  | sed "s/.*release-\([^ ]*\).*$/\1/")
           git push --tag
