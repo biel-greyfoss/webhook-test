@@ -5,6 +5,7 @@ on:
       - submitted
 jobs:
   Add_tag:
+     if: ${{ contains(github.event.review.body, 'release-') }}
      runs-on: ubuntu-latest
      steps:     
        - uses: actions/checkout@v2  
