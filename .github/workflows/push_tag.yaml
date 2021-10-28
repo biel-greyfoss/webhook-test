@@ -9,17 +9,17 @@ jobs:
      if: ${{ github.event.pull_request.merged }}
      runs-on: ubuntu-latest
      steps:     
-       - name: Dump GitHub context
-         env:
-           GITHUB_CONTEXT: ${{ toJSON(github) }}
-         run: echo "$GITHUB_CONTEXT"
-       - uses: actions/checkout@v2  
+       - uses: actions/checkout@v2   
+       - name: Extract Version
+         uses: mikefarah/yq@master
+         with:
+          cmd: VERSION=yq e '.spec.template.spec.containers[0].image' 'deployment/deployment.yaml'
        - name: Push Tag
          id: image
          run: |
-          VERSION=release-$(echo "${{ github.event.review.body }}"  | sed "s/.*release-\([^ ]*\).*$/\1/")
           IMAGE_ID=$FILES_IMAGE_NAME
           echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-          docker tag image $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+          echo $VERSION
+          #echo VERSION=$VERSION
+          #docker tag image $IMAGE_ID:$VERSION
+          #docker push $IMAGE_ID:$VERSION
